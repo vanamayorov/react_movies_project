@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.material-icons {
+  font-size: 18px;
+  vertical-align: sub;
+}

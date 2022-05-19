@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { addFilm, deleteFilm } from '../reducers/moviesToWatchReducerSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addFilm, deleteFilm, getChosenFilms } from '../reducers/moviesToWatchReducerSlice';
 import { removeFilm } from '../reducers/moviesReducerSlice';
 
 
-const MovieItem = ({ movie, moviesToWatch }) => {
+const MovieItem = ({ movie }) => {
     const dispatch = useDispatch();
+    const moviesToWatch = useSelector(getChosenFilms);
 
     const [isClicked, setIsClicked] = useState(false);
 
     useEffect(() => {
         if (moviesToWatch.find(item => item.id === movie.id)) setIsClicked(true);
         else setIsClicked(false);
-    }, [moviesToWatch]);
+    }, [moviesToWatch]); //eslint-disable-line
 
     const addMovie = movie => {
         dispatch(addFilm(movie));
@@ -26,7 +27,6 @@ const MovieItem = ({ movie, moviesToWatch }) => {
         dispatch(deleteFilm(movie));
         dispatch(removeFilm(movie));
     }
-
 
     return (
         <div className="offset-1 col-10 offset-sm-0 col-sm-6 mt-4">
@@ -43,7 +43,7 @@ const MovieItem = ({ movie, moviesToWatch }) => {
                     </div>
                     <div className="d-flex justify-content-end align-items-center mt-auto">
                         {isClicked
-                            ? <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteMovie(movie)}>Remove Watch</button>
+                            ? <button type="button" className="btn btn-danger btn-sm" onClick={() => deleteMovie(movie)}>Remove from watching list</button>
                             : <button type="button" className="btn btn-success btn-sm" onClick={() => addMovie(movie)}>Add Watch</button>
                         }
 

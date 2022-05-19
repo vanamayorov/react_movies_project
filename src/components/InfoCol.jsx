@@ -27,4 +27,4 @@ const InfoCol = () => {
     );
 }
 
-export const MemoInfoCol = React.memo(InfoCol);
+export default React.memo(InfoCol);

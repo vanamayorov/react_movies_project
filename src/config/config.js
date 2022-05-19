@@ -1,6 +1,36 @@
 export const API_URL = "https://api.themoviedb.org/3";
 
-export const API_KEY_3 = "3f4ca4f3a9750da53450646ced312397";
+export const API_KEY_3 = "35b29316bf428e3fd0c951349a822ba2";
 
 export const API_KEY_4 =
-    "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzZjRjYTRmM2E5NzUwZGE1MzQ1MDY0NmNlZDMxMjM5NyIsInN1YiI6IjVhYzlmNWRkOTI1MTQxNjJhZTA1Njk0NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.Fc4f9DVB6pFWh6hIjYe0NCC4pImdmNzDIfi_3Nb3tC4";
+    "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIzNWIyOTMxNmJmNDI4ZTNmZDBjOTUxMzQ5YTgyMmJhMiIsInN1YiI6IjYyODYwNjgxYmYwOWQxMDA1MjkwNTFjOSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.NFTtGOWZWhsrM09iWq5OIt5J9QhrKHqIu15wplLVlM4";
+
+export const endPoints = {
+    getFilms: "/discover/movie",
+    getToken: "/authentication/token/new",
+    validateWithLogin: "/authentication/token/validate_with_login",
+    getSession: "/authentication/session/new",
+    account: "/account",
+    deleteSession: "/authentication/session"
+}    
+
+export const fetchApi = (url, options = {}) => {
+    return new Promise((res, rej) => {
+        fetch(url, options)
+            .then(response => {
+                if (response.status < 400) {
+                    return response.json();
+                }
+
+                throw response;
+            })
+            .then(data => {
+                res(data);
+            })
+            .catch(response => {
+                response.json().then(error => {
+                    rej(error);
+                })
+            });
+    });
+}

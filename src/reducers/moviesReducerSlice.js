@@ -1,13 +1,23 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import FilmService from '../API/FilmService';
+import ApiService from '../API/ApiService';
+import { endPoints } from '../config/config';
 import { setPages } from './sortBarReducerSlice';
 
 export const fetchFilms = createAsyncThunk(
     'movies_store/initialLoad',
     async function ({ sortBy, page }, { rejectWithValue, dispatch }) {
         try {
-            const response = await FilmService.getFilms(sortBy, page);
-            dispatch(setPages(response.pages));
+            const queryStringParams = {
+                sort_by: sortBy,
+                page: page,
+                region: 'ru'
+            }
+
+            const response = await ApiService.get(endPoints.getFilms, {
+                params: queryStringParams
+            });
+            
+            dispatch(setPages(response.total_pages));
             return response;
         } catch (error) {
             return rejectWithValue(error.message);
